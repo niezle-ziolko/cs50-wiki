@@ -7,7 +7,7 @@ This is a simple Wikipedia-style encyclopedia built with Django, HTML, and CSS. 
 The Django project contains the following key elements:
 
 ```
-wiki/
+cs50-wiki/
 ├── encyclopedia/           # Django app for the wiki
 │   ├── migrations/
 │   │   └── __init__.py
