@@ -50,6 +50,7 @@ wiki/
 │   ├── urls.py
 │   └── wsgi.py
 ├── .gitignore
+├── LICENSE
 ├── manage.py
 ├── README.md
 └── requirements.txt
