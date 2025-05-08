@@ -1,95 +1,158 @@
 # CS50 Project 1 - Wiki
 
-A custom design project for CS50's Web Programming with Python and JavaScript course, which is a simple clone of Wikipedia. The project utilizes Django, HTML, and CSS.
+This is a simple Wikipedia-style encyclopedia built with Django, HTML, and CSS. The project was created as part of Harvard's CS50’s Web Programming with Python and JavaScript course and includes dynamic page rendering, Markdown support, editing, searching, and content creation features.
 
-## Demo
+## 🗂️ Project Structure
 
-A short video where I go through the required specifications of the project: [https://youtu.be/VMSHx8HTh2w](https://youtu.be/VMSHx8HTh2w)
+The Django project contains the following key elements:
 
-## Project Requirements
+```
+wiki/
+├── encyclopedia/           # Django app for the wiki
+│   ├── migrations/
+│   │   └── __init__.py
+│   ├── static/
+│   │   └── encyclopedia/
+│   │       ├── favicon.ico
+│   │       ├── logo-dark.webp
+│   │       ├── logo-light.webp
+│   │       ├── script.js
+│   │       └── styles.css
+│   ├── templates/
+│   │   └── encyclopedia/
+│   │       ├── edit.html
+│   │       ├── index.html
+│   │       ├── layout.html
+│   │       ├── new.html
+│   │       ├── page.html
+│   │       ├── result.html
+│   │       └── results.html
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   ├── util.py             # Helper functions for Markdown & file handling
+│   └── views.py
+├── entries/                # Folder with app content
+│   ├── CSS.md
+│   ├── Django.md
+│   ├── Git.md
+│   ├── HTML.md
+│   ├── Pepe-the-Frog.md
+│   ├── Python.md
+│   └── Test.md
+├── wiki/                   # Main project configuration
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── .gitignore
+├── manage.py
+├── README.md
+└── requirements.txt
+```
 
-### Website Structure
+The core logic for rendering, searching, editing, and navigating entries is implemented in the `encyclopedia` app.
 
-Your site must include the following core features:
+## ✅ Features Overview
 
-1. **Entry Page**:
-   - Visiting `/wiki/TITLE`, where `TITLE` is the title of an encyclopedia entry, should display the contents of that entry.
-   - If an entry exists:
-     - Display the content of the entry.
-     - The title of the page should include the name of the entry.
-   - If an entry does not exist:
-     - Display an error page indicating the page was not found.
+This section summarizes each feature implemented in the application.
 
-2. **Index Page**:
-   - Update `index.html` to list all encyclopedia entries as clickable links.
-   - Clicking on an entry name should navigate directly to the corresponding entry page.
+### 📖 Entry Page
+  - Visiting `/wiki/TITLE` displays the entry's content.
+  - If the entry exists:
+    - The page displays the corresponding Markdown-converted content.
+    - The HTML title reflects the entry title.
+  - If the entry does not exist:
+    - An error page is displayed indicating the entry was not found.
 
-3. **Search Functionality**:
-   - A search box should be provided in the sidebar for users to query encyclopedia entries.
-   - If the query matches an entry name:
-     - Redirect the user to the corresponding entry’s page.
-   - If the query does not match exactly:
-     - Display a search results page listing all entries where the query appears as a substring.
-     - For example, searching for "Py" should include "Python" in the results.
-   - Clicking on any result should take the user to that entry’s page.
+### 🏠 Index Page
+  - The homepage lists all encyclopedia entries alphabetically as clickable links.
+  - Clicking a link redirects to the corresponding entry page.
 
-4. **New Page**:
-   - Provide a "Create New Page" link in the sidebar.
-   - This should navigate to a page where users can create a new encyclopedia entry:
-     - Input fields for the title and Markdown content.
-     - A button to save the new page.
-   - If the provided title matches an existing entry:
-     - Display an error message.
-   - Otherwise:
-     - Save the new entry and navigate to its page.
+### 🔎 Search Functionality
+  - A search box is always available in the sidebar.
+  - Behavior:
+    - If the query **exactly matches** an entry title:
+      - Redirects directly to that entry.
+    - If the query is a **substring match**:
+      - Displays a search results page with all partial matches.
+      - Clicking a result leads to the respective entry page.
 
-5. **Edit Page**:
-   - Each entry page should include a link to edit the entry.
-   - The edit page should:
-     - Display a textarea pre-populated with the existing Markdown content.
-     - Include a button to save changes.
-   - After saving changes:
-     - Redirect back to the updated entry page.
+### ➕ New Page Creation
+  - The sidebar includes a “Create New Page” link.
+  - Users are taken to a form where they can:
+    - Provide a title and Markdown content.
+    - Submit the form to create the entry.
+  - Validation:
+    - If an entry with that title already exists:
+      - An error is shown.
+    - Otherwise:
+      - The entry is saved and the user is redirected to the new page.
 
-6. **Random Page**:
-   - Include a "Random Page" link in the sidebar.
-   - Clicking the link should navigate to a random encyclopedia entry.
+### ✏️ Edit Page
+  - Each entry page includes an “Edit” link.
+  - The edit interface:
+    - Displays a `textarea` pre-filled with the entry’s current Markdown.
+    - Users can make changes and save them.
+    - After saving, the user is redirected to the updated entry.
 
-7. **Markdown to HTML Conversion**:
-   - Convert Markdown content to HTML before rendering it on entry pages.
-   - You may use the `python-markdown2` package for conversion, installable via `pip3 install markdown2`.
+### 🎲 Random Page
+  - A “Random Page” link in the sidebar redirects to a randomly chosen entry.
 
----
+### 🔁 Markdown Conversion
+  - Entry content is stored as Markdown files.
+  - Before rendering, content is converted to HTML using the `markdown2` package:
+    ```bash
+    pip3 install markdown2
+    ```
 
-## Additional Notes
+### 💡 Additional Notes
+  - **Consistency**: The site follows a clean and uniform design for easy navigation.
+  - **Error Handling**: Invalid actions (e.g., duplicate entries, missing pages) trigger clear, informative messages.
+  - **Extensibility**: The modular code structure supports future feature additions or design changes.
 
-- **Consistency**: Ensure that the layout, styling, and navigation maintain a cohesive design across the site.
-- **Error Handling**: Provide clear feedback for invalid inputs or missing entries.
-- **Extensibility**: The design and code should allow for future enhancements without significant rework.
+## 🚀 Running the Application
 
----
+To run the app locally:
 
-## Running the Application
+# Install dependencies
 
-To start the application, follow these steps:
+```bash
+pip install -r requirements.txt
+```
 
-1. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
+# Database setup
 
-2. Migration
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
 
-2. Start the application
-   ```bash
-   python manage.py runserver
+# Start development server
 
+```bash
+python manage.py runserver
+```
 
-## Build static assets
+## 🧱 Static Assets
 
-To build static assets, follow these steps:
+To collect and build static assets:
 
 ```bash
 python manage.py collectstatic
+```
+
+## 🎥 Demo
+
+Video walkthrough of the project and specifications:
+👉 https://youtu.be/VMSHx8HTh2w
+
+## 📜 Certification
+This project was submitted as part of the CS50’s Web Programming with Python and JavaScript course offered by Harvard University.
+Upon successful completion, I was awarded a certificate, which is available here:
+
+🎓 [View Certificate](https://certificates.cs50.io/6f5116d0-882d-4fc1-9dc6-0c96c5d4c7b1.pdf)
